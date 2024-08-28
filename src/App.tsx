@@ -1,6 +1,9 @@
 // import { PropsWithChildren, ReactNode, useRef, useState } from 'react'
 import { useEffect, useState } from "react";
-import Button from "./components/Button";
+import { useStore } from "./hook/useState";
+import { Video, VideoResponse } from "./interface";
+import axios from "axios";
+import { useCounterStore } from "./store/useCounterStore";
 // function App() {
 //   const devRef = useRef<HTMLButtonElement>(null)
 //   const [first, setFirst] = useState<string>()
@@ -66,49 +69,71 @@ import Button from "./components/Button";
 //     {children}
 //   </div>
 // }
-import axios from "axios";
-import { useAuth } from "./hook/useAuth";
+// import axios from "axios";
+// import { useAuth } from "./hook/useAuth";
 
-const api = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com'
-})
-
-
-interface Todo {
-  userId: number,
-  id: number,
-  title: string,
-  complete: boolean
-}
-
-const App = () => {
-
-  const [todos, setTodos] = useState<Todo[]>([])
+// const api = axios.create({
+//   baseURL: 'https://jsonplaceholder.typicode.com'
+// })
 
 
-  const { login } = useAuth()
+// interface Todo {
+//   userId: number,
+//   id: number,
+//   title: string,
+//   complete: boolean
+// }
+
+// const App = () => {
+
+//   const [todos, setTodos] = useState<Todo[]>([])
+
+
+//   const { login } = useAuth()
   
-  login({
-    email: "nikh",
-    name: "ndv"
-  })
-  useEffect(() => {
-    const getData = async () => {
-      const { data } = await api<Todo[]>("/todos")
-      setTodos(data)
-      console.log(data);
+//   login({
+//     email: "nikh",
+//     name: "ndv"
+//   })
+//   useEffect(() => {
+//     const getData = async () => {
+//       const { data } = await api<Todo[]>("/todos")
+//       setTodos(data)
+//       console.log(data);
       
-    }
+//     }
 
-    getData()
-  },[])
+//     getData()
+//   },[])
+//   return (
+//     <div>
+//       {todos.map(item => (
+//         <div key={item.id}>{item.title }</div>
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default App;
+
+
+
+// 
+
+
+
+
+function App() {
+  const count = useCounterStore((state) => state.count)
+  const increase = useCounterStore((state) => state.increase)
+  const decrease = useCounterStore((state) => state.decrease)
   return (
     <div>
-      {todos.map(item => (
-        <div key={item.id}>{item.title }</div>
-      ))}
+      <button onClick={increase}>increase</button>
+      {count}
+      <button onClick={decrease}>decrease</button>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

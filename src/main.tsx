@@ -2,13 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { AuthProvider } from './hook/useAuth.tsx'
+import { StoreProvider } from './hook/useState.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
+    <StoreProvider>
       <App />
-            
-    </AuthProvider>
+      </StoreProvider>      
+   
   </StrictMode>,
 )
